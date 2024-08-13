@@ -12,5 +12,3 @@ def chatbot(input,client):
         reply = chat.choices[0].message.content
         messages.append({"role": "assistant", "content": reply})
         return reply
-
-

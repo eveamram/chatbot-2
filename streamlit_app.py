@@ -10,7 +10,9 @@ from recipe_generator import chatbot
 with open("Color_Streamlit.py") as f:
     st.markdown(f"<style >{f.read()}</style>", unsafe_allow_html=True)
 
-client = OpenAI(api_key=' ')
+st.sidebar.title("OpenAI API Key")
+openai_api_key = st.sidebar.text_input("Enter your OpenAI API Key:", type="password")
+client = OpenAI(api_key=openai_api_key)
 
 
 ## Title + Picture
@@ -39,7 +41,7 @@ if option == "Create a recipe based on ingredients":
 
 # Difficulty of dish
 difficulty = st.select_slider(
-    'Select the difficulty level of the recipe:',
+   'Select the difficulty level of the recipe:',
     options=['Easy', 'Medium', 'Hard'],
     value='Medium'  # default value
 )
@@ -48,6 +50,41 @@ difficulty = st.select_slider(
 st.sidebar.title("Food Categories")
 food_categories = ["Appetizers", "Main Courses", "Desserts"]
 selected_category = st.sidebar.selectbox("Select a category:", food_categories)
+
+#Time 
+time = st.select_slider(
+    'Time you have in minutes',
+    options=list(range(5, 120))
+)
+#Number of people eating
+number = st.select_slider(
+    'Select the number of people eating: ',
+    options=list(range(1, 51)),  # Range from 1 to 50
+    value=1  # Default value
+)
+
+#Dietary restrictions
+restrictions = [
+ "Vegetarian",
+    "Vegan",
+    "Gluten-Free",
+    "Dairy-Free",
+    "Nut-Free",
+    "Soy-Free",
+    "Halal",
+    "Kosher",
+    "Pescatarian",
+    "Lactose Intolerance",
+    "Egg-Free",
+    "Shellfish-Free",
+    "Peanut-Free",
+    "Diabetic", 
+    "Other"
+]
+dietary = st.selectbox("Any dietary restrictions?", restrictions)
+if dietary == "Other" :
+    dietary = st.text_input("Other:")
+
 
 
 # Button to generate recipes

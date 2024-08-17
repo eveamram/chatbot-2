@@ -51,6 +51,7 @@ st.sidebar.title("Food Categories")
 food_categories = ["Appetizers", "Main Courses", "Desserts"]
 selected_category = st.sidebar.selectbox("Select a category:", food_categories)
 
+
 #Time 
 time = st.select_slider(
     'Time you have in minutes',
@@ -79,20 +80,19 @@ restrictions = [
     "Shellfish-Free",
     "Peanut-Free",
     "Diabetic", 
-    "Other"
+    "Other",
+    "None"
 ]
 dietary = st.selectbox("Any dietary restrictions?", restrictions)
 if dietary == "Other" :
     dietary = st.text_input("Other:")
 
-
-
 # Button to generate recipes
 if st.button("Generate Recipe"):
     with st.spinner("Generating recipe..."):
     
-     prompt = f"""You may add other ingredients, but the recipe must feature these specified {ingredients}.
-     The recipe should be at a {difficulty} difficulty level 
-     and reflect the flavors and techniques of {selected_cuisine} cuisine.
-     """
+     prompt = f"""You may add other ingredients, but the recipe must feature these specified ingredients: {ingredients}.
+        The recipe should be at a {difficulty} difficulty level and reflect the flavors and techniques of {selected_cuisine} cuisine.
+        The recipe should take no more than {time} minutes to prepare, be suitable for {number} people, and adhere to the following dietary restriction: {dietary}.
+        """
      st.write(chatbot(prompt, client))

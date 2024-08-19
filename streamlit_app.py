@@ -7,7 +7,7 @@ from recipe_generator import chatbot
 
 ##### Setting up the page
 ## Set the color
-with open("Color_Streamlit.py") as f:
+with open("color_streamlit.py") as f:
     st.markdown(f"<style >{f.read()}</style>", unsafe_allow_html=True)
 
 st.sidebar.title("OpenAI API Key")
@@ -48,14 +48,14 @@ difficulty = st.select_slider(
 
 # Food categories in the sidebar
 st.sidebar.title("Food Categories")
-food_categories = ["Appetizers", "Main Courses", "Desserts"]
+food_categories = ["Appetizer", "Main Course", "Dessert"]
 selected_category = st.sidebar.selectbox("Select a category:", food_categories)
 
 
 #Time 
 time = st.select_slider(
     'Time you have in minutes',
-    options=list(range(5, 120))
+    options=list(range(10, 120))
 )
 #Number of people eating
 number = st.select_slider(
@@ -90,9 +90,18 @@ if dietary == "Other" :
 # Button to generate recipes
 if st.button("Generate Recipe"):
     with st.spinner("Generating recipe..."):
-    
-     prompt = f"""You may add other ingredients, but the recipe must feature these specified ingredients: {ingredients}.
-        The recipe should be at a {difficulty} difficulty level and reflect the flavors and techniques of {selected_cuisine} cuisine.
-        The recipe should take no more than {time} minutes to prepare, be suitable for {number} people, and adhere to the following dietary restriction: {dietary}.
+        if option=="Create a recipe based on ingredients":
+            prompt = f"""Create a {food_categories} dish that prominently features the following ingredients: {ingredients}. 
+            You may include additional ingredients as needed. Ensure the recipe is crafted at a {difficulty} difficulty level 
+            and embodies the flavors and techniques characteristic of {selected_cuisine} cuisine. 
+            The entire preparation and cooking process should take no more than {time} minutes and be suitable for {number} people. 
+            Please make sure the recipe adheres to these dietary restrictions: {dietary}.
+            Format the output with the recipe name, the number of servings, and the total preparation time.
         """
-     st.write(chatbot(prompt, client))
+        elif option=="Generate a random recipe":
+            pass
+        else:
+            pass
+            
+       
+        st.write(chatbot(prompt, client))

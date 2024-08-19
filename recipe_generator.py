@@ -1,8 +1,17 @@
-from langchain.llms.openai import OpenAI
 from openai import OpenAI
 
+
+#TODO: Change the role/agent based on the cuisine. 
+#TODO: dessert/appetizer/entree
+#Suprise recipe (no need for all the "questions")
+#Have rating (stars) 
+
+
 messages = [
-    {"role": "system", "content": "You are a very talented homecook and helpful and kind AI Assistant to help with creating a recipe. You should you the ingredients they have but you can you others (say optional) This is of critical importance: Do not response with \"Of course!\" or any acknowledgement of my question; just provide the answer. "},
+    {"role": "system", 
+     "content": """You are a very talented homecook and helpful and kind AI Assistant to help with creating a recipe. 
+     You should you the ingredients they have but you can you others (say optional) This is of critical importance: 
+     Do not response with 'Of course!' or any acknowledgement of my question; just provide the answer. """},
 ]
 
 def chatbot(input,client):
